@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <!-- Stylesheets and other head elements -->
+</head>
+<body>
+    <header>
+        <!-- Navigation bar, logout button, etc. -->
+    </header>
+    <main>
+        <h1>Welcome, {{ user.username }}</h1>
+        <!-- Dashboard content -->
+        <div>
+            <h2>Your Conversations:</h2>
+            <ul>
+                {% for conversation in conversations %}
+                    <li>{{ conversation.timestamp }}: {{ conversation.message }}</li>
+                {% else %}
+                    <li>No conversations found.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </main>
+    <footer>
+        <!-- Footer content -->
+    </footer>
+</body>
+</html>

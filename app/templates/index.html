@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gateway to Fluent Language</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Additional head content -->
+</head>
+<body>
+    <header>
+        <button id="loginBtn">Login</button>
+        <button id="signupBtn">Signup</button>
+    </header>
+
+    <main>
+        <!-- ... [previous HTML code] ... -->
+        <div id="chatArea" style="height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+            <!-- Conversation messages will appear here -->
+        </div>
+
+        <div id="options" style="display: none; margin-bottom: 10px;">
+            <button id="moreExamplesBtn">Give More Examples</button>
+            <button id="relatedPhrasesBtn">Show Related Phrases/Words</button>
+        </div>
+
+        <div id="questionForm">
+            <form id="questionSubmitForm" method="post">
+                <input type="text" name="question" placeholder="Ask your English question" style="width: 80%;">
+                <input type="submit" value="Submit" style="width: 19%;">
+            </form>
+        </div>
+        
+        <div id="answerSection">
+            <!-- Answer will be displayed here after submission -->
+        </div>
+
+<div id="options" style="display: none;">
+    <button id="moreExamplesBtn">Give More Examples</button>
+    <button id="relatedPhrasesBtn">Show Related Phrases/Words</button>
+    <button id="newQuestionBtn">Ask Another Question</button>
+</div>
+
+<!-- ... [remaining HTML code] ... -->
+
+    </main>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <!-- Additional scripts -->
+</body>
+</html>
