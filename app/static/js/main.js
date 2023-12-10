@@ -58,6 +58,8 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => console.error('Error:', error));
     });
     
+    
+    
 
     document.getElementById('loginBtn').addEventListener('click', function() {
         window.location.href = '/login';  // Redirect to the login page
@@ -68,3 +70,6 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = '/sign_up';  // Redirect to the signup page
     });
 });
+
+
+

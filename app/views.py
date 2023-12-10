@@ -4,6 +4,7 @@ from .models.user import Conversation
 from . import db
 import json
 from .utils.openai_funcs import example_prompt, generate_system_message, get_response, related_prompt
+from .utils.organize_notes_gpt import get_notes
 
 views = Blueprint('views', __name__)
 
@@ -14,11 +15,14 @@ obj_language, answer_language = 'English', 'Chinese'
 @views.route('/', methods=['GET', 'POST'])
 def index():
     answer = None
+    user_logged_in = 'user_id' in session  # Check if user is logged in
+
     if request.method == 'POST':
         question = request.form['question']
-        # Call your function to process the question
+        # Assuming process_question is a function that handles the question
         # answer = process_question(question)
-    return render_template('index.html', answer=answer)
+
+    return render_template('index.html', answer=answer, user_logged_in=user_logged_in)
 
 
 
@@ -71,7 +75,24 @@ def get_related():
     return jsonify({'answer': answer})
 
 
+@views.route('/notes')
+def notes_page():
+    user_logged_in = 'message_list' in session
+    if user_logged_in:
+        print(session['message_list'])
+        notes = get_notes(obj_language, answer_language, session['message_list'], temperature, model)
+        print(notes)
+        return render_template('notes.html', notes=notes)
+    else:
+        return redirect(url_for('auth.login'))  # Redirect to login if user not logged in
 
+@views.route('/tests')
+def tests_page():
+    user_logged_in = 'user_id' in session
+    if user_logged_in:
+        return render_template('tests.html')
+    else:
+        return redirect(url_for('auth.login'))
 
 @views.route('/delete-note', methods=['POST'])
 def delete_note():  

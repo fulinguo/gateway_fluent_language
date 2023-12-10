@@ -13,6 +13,12 @@
 
     <main>
         <!-- ... [previous HTML code] ... -->
+        {% if user_logged_in %}
+        <!-- Display additional options for logged-in users -->
+        <a href="{{ url_for('views.notes_page') }}" target="_blank"><button>Notes</button></a>
+        <a href="{{ url_for('views.tests_page') }}" target="_blank"><button>Tests</button></a>
+        {% endif %}
+
         <div id="chatArea" style="height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
             <!-- Conversation messages will appear here -->
         </div>
