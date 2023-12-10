@@ -3,11 +3,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const chatArea = document.getElementById('chatArea');
     const optionsSection = document.getElementById('options');
 
+    function appendMessage(message, sender) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${sender}-message`;
+        messageDiv.innerHTML = `<b>${sender === 'user' ? 'You' : 'AI'}:</b> ${message}`;
+        chatArea.appendChild(messageDiv);
+        chatArea.scrollTop = chatArea.scrollHeight;  // Scroll to the bottom
+    }
+
     form.addEventListener('submit', function(event) {
         event.preventDefault();
         const questionInput = form.querySelector('input[name="question"]');
         const question = questionInput.value
-        chatArea.innerHTML += `<div class="message user-message"><b>You:</b> ${question}</div>`;
+        appendMessage(question, 'user');
         questionInput.value = '';
 
         fetch('/get-answer', {
@@ -19,14 +27,12 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => response.json())
         .then(data => {
-            chatArea.innerHTML += `<p><b>Answer:</b> ${data.answer}</p>`;
-            optionsSection.style.display = 'block'; 
+            appendMessage(data.answer, 'AI');
+            optionsSection.style.display = 'block';
         })
         .catch(error => {
             console.error('Error:', error);
         });
-        //answerSection.style.display = 'block';
-        //optionsSection.style.display = 'flex';
     });
 
     document.getElementById('moreExamplesBtn').addEventListener('click', function() {
@@ -35,15 +41,14 @@ document.addEventListener('DOMContentLoaded', function() {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             }
-            // No need to send a body as the prompt is not explicitly provided
         })
         .then(response => response.json())
         .then(data => {
-            chatArea.innerHTML += `<div class="message bot-message"><b>Bot:</b> ${data.answer}</div>`;
+            appendMessage(data.answer, 'AI');
         })
         .catch(error => console.error('Error:', error));
     });
-    
+
     document.getElementById('relatedPhrasesBtn').addEventListener('click', function() {
         fetch('/get-related', {
             method: 'POST',
@@ -53,11 +58,11 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => response.json())
         .then(data => {
-            chatArea.innerHTML += `<div class="message bot-message"><b>Bot:</b> ${data.answer}</div>`;
+            appendMessage(data.answer, 'AI');
         })
         .catch(error => console.error('Error:', error));
     });
-    
+
     
     
 
@@ -68,6 +73,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event listener for signup button
     document.getElementById('signupBtn').addEventListener('click', function() {
         window.location.href = '/sign_up';  // Redirect to the signup page
+    });
+
+    // Event listener for settings button
+    document.getElementById('settingsBtn').addEventListener('click', function() {
+        window.location.href = '/dashboard';  // Redirect to the settings page
     });
 });
 

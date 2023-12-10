@@ -20,9 +20,7 @@ def login():
             if check_password_hash(user.password, password):
                 flash('Logged in successfully!', category='success')
                 login_user(user, remember=True)
-                
-                conversations = Conversation.query.filter_by(user_id=user.id).order_by(Conversation.timestamp).all()
-                #return render_template('dashboard.html', user=user, conversations=conversations)               
+                           
                 return render_template('index.html', user=user, user_logged_in=True)
 
                 #return redirect(url_for('views.index'))

@@ -15,7 +15,7 @@ temperature = 0.7
 model = "gpt-3.5-turbo-1106"
 client = openai.OpenAI()
 example_prompt = 'show me some examples of how to use the words, or phrases, or grammar discussed above'
-related_prompt = 'show me some related words, or phrases, or grammar that I may not know and can help me understand the the questions better'
+related_prompt = 'show me some related words, or phrases, or English knowledge that I may not know and that can help me understand the questions better'
 
 def get_response(messages, temperature, model):
     #print(messages)

@@ -93,6 +93,13 @@ def tests_page():
         return render_template('tests.html')
     else:
         return redirect(url_for('auth.login'))
+    
+
+@views.route('/dashboard')
+@login_required
+def dashboard():
+    return render_template('dashboard.html', user=current_user)
+
 
 @views.route('/delete-note', methods=['POST'])
 def delete_note():  

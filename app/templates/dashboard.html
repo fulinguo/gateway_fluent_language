@@ -1,30 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>Dashboard</title>
-    <!-- Stylesheets and other head elements -->
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .dashboard-container { width: 80%; margin: auto; }
+        .profile-section, .learning-tools, .settings { margin-bottom: 20px; }
+        .card { border: 1px solid #ccc; padding: 15px; border-radius: 8px; }
+    </style>
 </head>
 <body>
-    <header>
-        <!-- Navigation bar, logout button, etc. -->
-    </header>
-    <main>
-        <h1>Welcome, {{ user.first_name }}</h1>
-        <!-- Dashboard content -->
-        <div>
-            <h2>Your Conversations:</h2>
-            <ul>
-                {% for conversation in conversations %}
-                    <li>{{ conversation.timestamp }}: {{ conversation.message }}</li>
-                {% else %}
-                    <li>No conversations found.</li>
-                {% endfor %}
-            </ul>
+    <div class="dashboard-container">
+        <div class="profile-section card">
+            <h2>Welcome back, {{ user.name }}!</h2>
+            <p>Email: {{ user.email }}</p>
+            <!-- Add more user details here -->
         </div>
-    </main>
-    <footer>
-        <!-- Footer content -->
-    </footer>
+
+        <div class="learning-tools card">
+            <h3>Your Learning Progress</h3>
+            <!-- Dynamically populate user's learning progress -->
+            <p>Current Level: {{ user.current_level }}</p>
+            <!-- Add more progress details here -->
+        </div>
+
+        <div class="settings card">
+            <h3>Settings</h3>
+            <p>Preferred Language: {{ user.preferred_language }}</p>
+            <!-- Add more settings here -->
+        </div>
+    </div>
 </body>
 </html>

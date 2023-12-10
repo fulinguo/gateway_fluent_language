@@ -94,24 +94,33 @@ main {
     background-color: #138496;
 }
 
+
+
+
+#chatArea {
+    height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
 .message {
-    padding: 5px 10px;
-    margin: 5px;
-    border-radius: 10px;
-    display: inline-block;
-    max-width: 80%;
+    max-width: 60%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 20px;
+    line-height: 1.4;
 }
 
 .user-message {
+    align-self: flex-end;
     background-color: #dcf8c6;
-    text-align: right;
-    float: right;
-    clear: both;
 }
 
-.bot-message {
+.ai-message {
+    align-self: flex-start;
     background-color: #e5e5ea;
-    text-align: left;
-    float: left;
-    clear: both;
 }

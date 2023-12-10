@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/6cb4dd05-8f02-42c7-ae11-3ecdef8ba399/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/gfl-multigpt",
+    "appService.deploySubpath": "."
+}
