@@ -34,4 +34,4 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(150))
     current_level = db.Column(db.String(50), default='Beginner')
     preferred_answer_language = db.Column(db.String(50), default='Chinese') 
-    #conversations = db.relationship('Coversation', backref='user', lazy=True)
+
