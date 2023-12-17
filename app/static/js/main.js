@@ -66,17 +66,25 @@ document.addEventListener('DOMContentLoaded', function() {
     
     
 
-    document.getElementById('loginBtn').addEventListener('click', function() {
-        window.location.href = '/login';  // Redirect to the login page
-    });
+    var loginBtn = document.getElementById('loginBtn');
+    if (loginBtn) {
+        loginBtn.addEventListener('click', function() {
+            window.location.href = '/login';
+        });
+    }
+    
 
-    // Event listener for signup button
-    document.getElementById('signupBtn').addEventListener('click', function() {
-        window.location.href = '/sign_up';  // Redirect to the signup page
-    });
+    var signupBtn = document.getElementById('signupBtn');
+    if (signupBtn) {
+        signupBtn.addEventListener('click', function() {
+            window.location.href = '/sign_up';
+        });
+    }
+ 
 
     // Event listener for settings button
     document.getElementById('settingsBtn').addEventListener('click', function() {
+        console.log('Settings button clicked');
         window.location.href = '/dashboard';  // Redirect to the settings page
     });
 });
