@@ -12,22 +12,48 @@
 <body>
     <div class="dashboard-container">
         <div class="profile-section card">
-            <h2>Welcome back, {{ user.name }}!</h2>
+            <h2>Welcome back, {{ user.first_name}}!</h2>
             <p>Email: {{ user.email }}</p>
             <!-- Add more user details here -->
         </div>
+     
+        <div class="settings card">
+            <h3>Settings</h3>
+            <p>Preferred Language: <span id="currentLanguage">{{ user.preferred_answer_language }}</span></p>
+            <button onclick="showEditOptions()">Edit</button>
+        
+            <div id="languageOptions" style="display:none;">
+                <form action="/change_language" method="post">
+                    <label for="language">Change Language:</label>
+                    <select name="language" id="language">
+                        <option value="English" {% if user.preferred_answer_language == 'English' %} selected {% endif %}>English</option>
+                        <option value="Chinese" {% if user.preferred_answer_language == 'Chinese' %} selected {% endif %}>Chinese</option>
+                        <!-- Add more languages as options here -->
+                    </select>
+                    <input type="submit" value="Change Language">
+                </form>
+            </div>
+            <!-- Add more settings here -->
+        </div>
+        
+        <script>
+            function showEditOptions() {
+                var x = document.getElementById("languageOptions");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            }
+        </script>
+        
+        
 
         <div class="learning-tools card">
             <h3>Your Learning Progress</h3>
             <!-- Dynamically populate user's learning progress -->
             <p>Current Level: {{ user.current_level }}</p>
             <!-- Add more progress details here -->
-        </div>
-
-        <div class="settings card">
-            <h3>Settings</h3>
-            <p>Preferred Language: {{ user.preferred_language }}</p>
-            <!-- Add more settings here -->
         </div>
     </div>
 </body>

@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, jsonify, session, redirect, url_for
 from flask_login import login_required, current_user
-from .models.user import Conversation
+from .models.user import Conversation, User
 from . import db
 import json
 from .utils.openai_funcs import example_prompt, generate_system_message, get_response, related_prompt
@@ -24,7 +24,20 @@ def index():
 
     return render_template('index.html', answer=answer, user_logged_in=user_logged_in)
 
+@views.route('/change_language', methods=['POST'])
+@login_required
+def change_language():
+    new_language = request.form['language']
+    
+    # Update the user's preferred language in the database
+    if current_user.is_authenticated:
+        current_user.preferred_answer_language = new_language
+        db.session.commit()
+        flash('Language updated successfully.')
+    else:
+        flash('User not found.')
 
+    return redirect(url_for('views.dashboard'))
 
 '''
 @views.route('/', methods=['GET', 'POST'])
@@ -55,6 +68,8 @@ def get_answer():
     session['message_list'].append({"role": "user", "content": question})
     answer = get_response(session['message_list'], temperature, model)
     session['message_list'].append({"role": "assistant", "content": answer})
+
+    print(session['message_list'])
     
     return jsonify({'answer': answer})
 
