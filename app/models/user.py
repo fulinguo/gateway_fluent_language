@@ -19,6 +19,9 @@ class Note(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref=db.backref('notes', lazy=True))
 
+    def __repr__(self):
+        return f"<Note id={self.id} content='{self.content[:30]}'>"
+
 
 class Performance(db.Model):
     id = db.Column(db.Integer, primary_key=True)
