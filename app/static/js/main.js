@@ -64,8 +64,19 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById('generateNotesBtn').addEventListener('click', function() {
+        fetch('/generate-notes', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }
+        })
+        .then(response => response.json())
+        
+        .catch(error => console.error('Error:', error));
     });
 
+    
+   
     
     
 

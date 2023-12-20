@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, jsonify, session, redirect, url_for
 from flask_login import login_required, current_user
-from .models.user import Conversation, User
+from .models.user import Conversation, User, Note
 from . import db
 import json
 from .utils.openai_funcs import example_prompt, generate_system_message, get_response, related_prompt
@@ -78,19 +78,60 @@ def get_answer():
 
 @views.route('/get-examples', methods=['POST'])
 def get_examples():
+    session.modified = True
     session['message_list'].append({"role": "user", "content": example_prompt})
     answer = get_response(session['message_list'], temperature, model)
+
+    session.modified = True
     session['message_list'].append({"role": "assistant", "content": answer})
     
     return jsonify({'answer': answer})
 
 @views.route('/get-related', methods=['POST'])
 def get_related():
+    session.modified = True
     session['message_list'].append({"role": "user", "content": related_prompt})
     answer = get_response(session['message_list'], temperature, model)
+
+    session.modified = True
     session['message_list'].append({"role": "assistant", "content": answer})
     
     return jsonify({'answer': answer})
+
+@views.route('/delete-notes')
+def delete_notes():
+    if current_user.is_authenticated:
+        try:
+            # Delete all notes for the current user
+            Note.query.filter_by(user_id=current_user.id).delete()
+            
+            # Commit the changes to the database
+            db.session.commit()
+
+            flash('All notes have been successfully deleted.', 'success')
+        except Exception as e:
+            # Handle exceptions
+            db.session.rollback()
+            flash(f'An error occurred: {e}', 'error')
+
+        return redirect(url_for('views.notes'))
+    else:
+        return redirect(url_for('auth.login'))
+
+@views.route('/generate-notes', methods=['POST'])
+def generate_notes():
+    notes = get_notes(obj_language, answer_language, session['message_list'], temperature, model)
+    print(notes)
+
+    session['notes'] = notes
+    # add notes from session to database
+
+    new_note = Note(content=notes, user_id=current_user.id)
+    db.session.add(new_note)
+    db.session.commit()
+
+
+    return jsonify({'notes': notes})
 
 @views.route('/notes')
 def notes_page():
@@ -136,8 +177,10 @@ def delete_note():
         if note.user_id == current_user.id:
             db.session.delete(note)
             db.session.commit()
+            flash('Note deleted successfully.', category='success')
+    
+    return jsonify({"message": "Note deleted successfully", "status": "success"})
 
-    return jsonify({})
 
 
 

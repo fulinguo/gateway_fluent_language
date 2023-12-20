@@ -11,12 +11,41 @@
             background-color: #f8f8f8;
             white-space: pre-wrap; /* To ensure long lines wrap */
         }
+        .note {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .note:last-child {
+            border-bottom: none;
+        }
+        .delete-button {
+            background-color: #ff6347; /* Tomato color */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .delete-button:hover {
+            background-color: #e35d45; /* Darker shade for hover effect */
+        }
     </style>
 </head>
 <body>
     <h1>Your Organized Notes</h1>
     <div class="note-container">
-        <pre>{{ notes }}</pre>
+        {% for note in notes %}
+        <div class="note">
+            <pre>{{ note.content }}</pre>
+        </div>
+        {% endfor %}
     </div>
+
+    <form action="{{ url_for('views.delete_notes') }}" method="POST">
+        <button type="submit" class="delete-button" onclick="return confirm('Are you sure you want to delete all notes?');">Delete All Notes</button>
+    </form>
+    
 </body>
 </html>
