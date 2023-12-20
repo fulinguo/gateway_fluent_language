@@ -3,14 +3,53 @@
 <head>
     <title>Dashboard</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        .dashboard-container { width: 80%; margin: auto; }
-        .profile-section, .learning-tools, .settings { margin-bottom: 20px; }
-        .card { border: 1px solid #ccc; padding: 15px; border-radius: 8px; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Light grey background */
+            color: #333; /* Darker text for better readability */
+        }
+        .dashboard-container {
+            width: 80%;
+            margin: auto;
+            background-color: #fff; /* White background for the container */
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* subtle shadow */
+        }
+        .profile-section, .learning-tools, .settings {
+            margin-bottom: 20px;
+        }
+        .card {
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #fafafa; /* Slightly off-white cards */
+        }
+        h2, h3 {
+            color: #007bff; /* Blue headings */
+        }
+        button {
+            background-color: #007bff; /* Blue button */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+        .back-button {
+            background-color: #6c757d; /* Gray button for back */
+            margin-bottom: 20px; /* Spacing */
+        }
     </style>
 </head>
 <body>
     <div class="dashboard-container">
+        <button class="back-button" onclick="history.back()">← Back</button>
+
+        
         <div class="profile-section card">
             <h2>Welcome back, {{ user.first_name}}!</h2>
             <p>Email: {{ user.email }}</p>

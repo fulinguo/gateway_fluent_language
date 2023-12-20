@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
 from flask_migrate import Migrate
+from datetime import timedelta
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
@@ -10,9 +11,12 @@ DB_NAME = "database.db"
 
 def create_app():
     app = Flask(__name__)
+    app.config['DEBUG'] = True
     migrate = Migrate(app, db)
     app.config['SECRET_KEY'] = 'hjshjhdjah kjshkjdhjs'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=60)
+    
     db.init_app(app)
 
     from .views import views

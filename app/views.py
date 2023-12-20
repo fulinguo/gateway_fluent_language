@@ -64,9 +64,12 @@ def get_answer():
     
     if 'message_list' not in session:
         session['message_list'] = [{"role": "system", "content": system_message}]
-        
+
+    session.modified = True    
     session['message_list'].append({"role": "user", "content": question})
     answer = get_response(session['message_list'], temperature, model)
+
+    session.modified = True
     session['message_list'].append({"role": "assistant", "content": answer})
 
     print(session['message_list'])
@@ -89,17 +92,25 @@ def get_related():
     
     return jsonify({'answer': answer})
 
-
 @views.route('/notes')
 def notes_page():
-    user_logged_in = 'message_list' in session
-    if user_logged_in:
-        print(session['message_list'])
-        notes = get_notes(obj_language, answer_language, session['message_list'], temperature, model)
+    if current_user.is_authenticated:
+        notes = current_user.notes
         print(notes)
         return render_template('notes.html', notes=notes)
     else:
-        return redirect(url_for('auth.login'))  # Redirect to login if user not logged in
+        return redirect(url_for('auth.login')) 
+
+
+#@views.route('/notes')
+#def notes_page():
+#    if current_user.is_authenticated:
+        #print(session['message_list'])
+#        notes = get_notes(obj_language, answer_language, session['message_list'], temperature, model)
+#        print(notes)
+#        return render_template('notes.html', notes=notes)
+#    else:
+#        return redirect(url_for('auth.login'))  # Redirect to login if user not logged in
 
 @views.route('/tests')
 def tests_page():
@@ -127,3 +138,13 @@ def delete_note():
             db.session.commit()
 
     return jsonify({})
+
+
+
+@views.route('/logout')
+def logout():
+    # Remove all data from the session
+    session.clear()
+    return redirect(url_for('auth.login'))
+
+

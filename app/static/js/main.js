@@ -63,6 +63,9 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => console.error('Error:', error));
     });
 
+    document.getElementById('generateNotesBtn').addEventListener('click', function() {
+    });
+
     
     
 

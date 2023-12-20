@@ -13,16 +13,18 @@
             <button id="loginBtn">Login</button>
             <button id="signupBtn">Signup</button>
         {% endif %}
-    </header>
-    
 
-    <main>
         <!-- ... [previous HTML code] ... -->
-        {% if user_logged_in %}
+        {% if current_user.is_authenticated %}
         <!-- Display additional options for logged-in users -->
         <a href="{{ url_for('views.notes_page') }}" target="_blank"><button>Notes</button></a>
         <!-- <a href="{{ url_for('views.tests_page') }}" target="_blank"><button>Tests</button></a> -->
         {% endif %}
+    </header>
+    
+
+    <main>
+        
 
         <div id="chatArea" style="height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
             <!-- Conversation messages will appear here -->
@@ -31,6 +33,7 @@
         <div id="options" style="display: none; margin-bottom: 10px;">
             <button id="moreExamplesBtn">Give More Examples</button>
             <button id="relatedPhrasesBtn">Show Related Phrases/Words</button>
+            <button id="generateNotesBtn">Generate Notes</button>
         </div>
 
         <div id="questionForm">
@@ -47,7 +50,7 @@
 <div id="options" style="display: none;">
     <button id="moreExamplesBtn">Give More Examples</button>
     <button id="relatedPhrasesBtn">Show Related Phrases/Words</button>
-    <button id="newQuestionBtn">Ask Another Question</button>
+    <button id="generateNotesBtn">Generate Notes</button>
 </div>
 
 <!-- ... [remaining HTML code] ... -->
