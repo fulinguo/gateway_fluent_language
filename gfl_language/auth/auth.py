@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from app.models.user import User, Conversation
+from gfl_language.models.user import User, Conversation
 from werkzeug.security import generate_password_hash, check_password_hash
-from app import db   ##means from __init__.py import db
+from gfl_language import db   ##means from __init__.py import db
 from flask_login import login_user, login_required, logout_user, current_user
 
 
